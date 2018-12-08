@@ -1,11 +1,33 @@
 package com.mgm.ntnguyen;
 
+import java.util.Properties;
+import org.apache.log4j.Logger;
+
 /**
- * Hello world!
+ * Hello world.
  */
 public class App {
-    public static void main(String[] args) {
-        String version = App.class.getPackage().getImplementationVersion();
-        System.out.println("You are running on version: " + version);
+
+  private static final Logger logger = Logger.getLogger(App.class);
+
+  /**
+   * Method to run the app.
+   */
+  public static void main(String[] args) {
+    App app = new App();
+    String version = app.getVersion();
+    logger.info("You are running on version: " + version);
+  }
+
+  private String getVersion() {
+    Properties properties = new Properties();
+    try {
+      properties
+          .load(this.getClass().getClassLoader().getResourceAsStream("maven-release.properties"));
+      return properties.getProperty("app.version");
+    } catch (Exception e) {
+      logger.error("Cannot detect the version!", e);
+      return "Cannot detect the version";
     }
+  }
 }

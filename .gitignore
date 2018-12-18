@@ -14,3 +14,10 @@
 # Maven
 log/
 target/
+
+# Maven Release
+release.properties
+
+# Other
+dependency-reduced-pom.xml
+pom.xml.releaseBackup

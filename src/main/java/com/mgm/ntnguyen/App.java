@@ -16,6 +16,7 @@ public class App {
   public static void main(String[] args) {
     App app = new App();
     String version = app.getVersion();
+    logger.info("Hello world!");
     logger.info("You are running on version: " + version);
   }
 

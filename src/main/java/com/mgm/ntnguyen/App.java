@@ -1,6 +1,6 @@
 package com.mgm.ntnguyen;
 
-import java.util.Properties;
+import com.mgm.ntnguyen.thread.CountServiceThread;
 import org.apache.log4j.Logger;
 
 /**
@@ -14,21 +14,22 @@ public class App {
    * Method to run the app.
    */
   public static void main(String[] args) {
-    App app = new App();
-    String version = app.getVersion();
-    logger.info("This is hard printing from version 1.0.2");
-    logger.info("You are running on version: " + version);
+    for (int i = 0; i <= 10; i++) {
+      try {
+        logger.info(getString(i));
+        CountServiceThread thread = new CountServiceThread("");
+        thread.start();
+        thread.join();
+      } catch (Exception e) {
+        logger.error("Sth not run", e);
+      }
+    }
   }
 
-  private String getVersion() {
-    Properties properties = new Properties();
-    try {
-      properties
-          .load(this.getClass().getClassLoader().getResourceAsStream("maven-release.properties"));
-      return properties.getProperty("app.version");
-    } catch (Exception e) {
-      logger.error("Cannot detect the version!", e);
-      return "Cannot detect the version";
+  private static String getString(int i) {
+    if (i == 7) {
+      throw new RuntimeException("Hehe");
     }
+    return "Number: " + i;
   }
 }
